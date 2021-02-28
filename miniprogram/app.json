@@ -1,12 +1,16 @@
 {
   "pages": [
-    "pages/home/index"
+    "pages/home/index",
+    "pages/find/index",
+    "pages/message/index"
   ],
   "window": {
     "navigationStyle": "custom"
   },
   "usingComponents": {
-    "cu-custom": "/colorui/components/cu-custom"
+    "cu-custom": "/colorui/components/cu-custom",
+    "van-button": "@vant/weapp/button/index",
+    "van-divider": "@vant/weapp/divider/index"
   },
   "sitemapLocation": "sitemap.json"
 }

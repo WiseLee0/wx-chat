@@ -1,1 +1,66 @@
-/* miniprogram/pages/home/index.wxss */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.title {
+  font-size: 48rpx;
+  font-weight: bolder;
+  position: absolute;
+  left: 40rpx;
+  top: 80rpx;
+}
+.avatar {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 50%;
+  margin: 200rpx 0 50rpx 0;
+  overflow: hidden;
+}
+
+.func {
+  width: 100%;
+  height: 150rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fun {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 49%;
+}
+
+.fun > view {
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.divider {
+  width: 2rpx;
+  height: 90rpx;
+  background-color: #aaa;
+}
+
+.iconfont {
+  font-size: 100rpx;
+}
+
+.font-gray {
+  color: #aaa;
+  font-size: 24rpx;
+}
+.font-blod {
+  color: #333;
+  font-weight: bold;
+}
+.bar{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

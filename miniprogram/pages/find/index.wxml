@@ -1,0 +1,15 @@
+<!-- miniprogram/pages/find/index.wxml -->
+<text>miniprogram/pages/find/index.wxml</text>
+<view class="cu-bar tabbar bg-white bar">
+    <view class="action text-gray" bind:tap="onHome">
+        <view class="cuIcon-myfill"></view>
+        我的
+    </view>
+    <view class="action text-theme add-action">
+        <button class="cu-btn cuIcon-add bg-green shadow"></button>
+    </view>
+    <view class="action text-gray" bind:tap="onMessage">
+        <view class="cuIcon-messagefill"></view>
+        消息
+    </view>
+</view>

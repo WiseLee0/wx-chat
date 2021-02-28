@@ -1,1 +1,40 @@
-<cu-custom bgColor="bg-red light" ></cu-custom>
+<view class="header ">
+    <view class="title">我的</view>
+    <open-data type="userAvatarUrl" class="avatar"></open-data>
+    <view class="func">
+        <view class="fun">
+            <i class="iconfont icon-camerafill text-theme"></i>
+            <view>
+                <view>
+                    <text>8 /</text>
+                    <text class="font-gray">100</text>
+                </view>
+                <text class="font-bold">我的相册</text>
+            </view>
+        </view>
+        <view class="divider"></view>
+        <view class="fun">
+            <i class="iconfont icon-discoverfill text-theme"></i>
+            <view>
+                <view>
+                    <text style="margin-right:15rpx">92%</text>
+                    <van-tag type="success">高</van-tag>
+                </view>
+                <text>编辑资料</text>
+            </view>
+        </view>
+    </view>
+</view>
+<view class="cu-bar tabbar bg-white bar">
+    <view class="action text-theme">
+        <view class="cuIcon-myfill"></view>
+        我的
+    </view>
+    <view class="action text-gray add-action" bind:tap="onFind">
+        <button class="cu-btn cuIcon-add bg-green shadow"></button>
+    </view>
+    <view class="action text-gray" bind:tap="onMessage">
+        <view class="cuIcon-messagefill"></view>
+        消息
+    </view>
+</view>

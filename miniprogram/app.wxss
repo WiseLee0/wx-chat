@@ -1,6 +1,7 @@
 /**app.wxss**/
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";
+@import "iconfont/index.wxss";
 .container {
   display: flex;
   flex-direction: column;
@@ -19,7 +20,12 @@ button:focus{
 button::after{
   border: none;
 }
-
+.bar{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
 
 page {
   background: #f6f6f6;

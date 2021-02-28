@@ -3939,3 +3939,10 @@ scroll-view.cu-steps .cu-item {
 .lines-white {
 	color: var(--white);
 }
+
+.text-theme {
+	color: rgb(173, 152, 245);
+}
+.bg-theme {
+	background-color: rgb(173, 152, 245);
+}

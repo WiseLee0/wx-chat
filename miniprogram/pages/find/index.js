@@ -1,4 +1,4 @@
-// miniprogram/pages/home/index.js
+// miniprogram/pages/find/index.js
 Page({
 
   /**
@@ -14,10 +14,9 @@ Page({
   onLoad: function (options) {
 
   },
-
-  onFind: function () {
+  onHome: function () {
     wx.redirectTo({
-      url: '/pages/find/index'
+      url: '/pages/home/index'
     })
   },
   onMessage: function () {
@@ -25,7 +24,6 @@ Page({
       url: '/pages/message/index'
     })
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
