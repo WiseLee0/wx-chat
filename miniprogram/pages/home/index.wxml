@@ -1,24 +1,27 @@
+<cu-custom bgColor="bg-gradual-blue">
+    <view slot="content">我的</view>
+</cu-custom>
 <view class="header ">
-    <view class="title">我的</view>
-    <open-data type="userAvatarUrl" class="avatar"></open-data>
+    <image src="{{avatar}}" class="avatar" mode="aspectFill"></image>
     <view class="func">
-        <view class="fun">
+        <view class="fun" bindtap="onAblum">
             <i class="iconfont icon-camerafill text-theme"></i>
             <view>
                 <view>
-                    <text>8 /</text>
+                    <text>{{ablumCount}} / </text>
                     <text class="font-gray">100</text>
                 </view>
                 <text class="font-bold">我的相册</text>
             </view>
         </view>
         <view class="divider"></view>
-        <view class="fun">
+        <view class="fun" bindtap="onEdit">
             <i class="iconfont icon-discoverfill text-theme"></i>
             <view>
                 <view>
-                    <text style="margin-right:15rpx">92%</text>
-                    <van-tag type="success">高</van-tag>
+                    <text style="margin-right:15rpx">{{editCount == 0 ?100 :editCount }}%</text>
+                    <van-tag type="{{m.transformTag(editCount)}}">
+                        {{m.transform(editCount)}}</van-tag>
                 </view>
                 <text>编辑资料</text>
             </view>
@@ -38,3 +41,12 @@
         消息
     </view>
 </view>
+<wxs module="m">
+    var transformTag = function (num) {
+        if (num == 0) return 'success';
+        if (num < 40) return 'danger'; else if (num < 80) return 'warning'; else return 'success';
+    }; var
+        transform = function (num) {
+            if (num == 0) return '高'; if (num < 40) return '低'; else if (num < 80) return '中';
+            else return '高';
+        }; module.exports.transform = transform; module.exports.transformTag = transformTag; </wxs>

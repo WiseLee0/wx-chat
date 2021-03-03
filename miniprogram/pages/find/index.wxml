@@ -1,5 +1,68 @@
-<!-- miniprogram/pages/find/index.wxml -->
-<text>miniprogram/pages/find/index.wxml</text>
+<cu-custom bgColor="bg-gradual-blue">
+    <view slot="content">匹配</view>
+</cu-custom>
+
+
+<view class="container">
+    <view class="row">
+        <image src="{{msgData.avatar}}" class="cavatar" mode="aspectFill"></image>
+        <view class="msg">
+            <view class="msg-label">
+                <i class="iconfont {{msgData.xingbie == '男' ? 'icon-male-01' : 'icon-nv'}}"></i>
+                <text class="text-gray text-sm">{{time}}前来过</text>
+            </view>
+            <view class="msg-label">
+                <view class="inner-label">
+                    <i class="cuIcon-timefill label-icon"></i>
+                    <text class="text-df">{{m.getYear(msgData.riqi)  || 0}}岁</text>
+                </view>
+                <view class="inner-label">
+                    <i class="cuIcon-newshotfill label-icon"></i>
+                    <text class="text-df">{{msgData.shengao  || '未填写'}}</text>
+                </view>
+                <view class="inner-label">
+                    <i class="cuIcon-homefill label-icon"></i>
+                    <text class="text-df">{{msgData.chengshi  || '未填写'}}</text>
+                </view>
+            </view>
+            <view class="msg-label">
+                <view class="inner-label">
+                    <i class="cuIcon-shopfill label-icon"></i>
+                    <text class="text-df">{{msgData.hangye || '未填写'}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view>
+        <text> 自我介绍：</text>
+        <text> {{msgData.jieshao}}</text>
+    </view>
+</view>
+
+<view class="titleLabel">
+    <text class="titleClass">相册</text>
+    <text class="gray-note">共 {{count}} 张</text>
+</view>
+<view class="titleLabel box" bindtap="onAblum">
+    <view wx:for="{{imgList}}" wx:key="index" class="imgBox">
+        <image mode="aspectFill" src="{{item}}" class="img" bindtap='previewImage' data-src="{{index}}"></image>
+        <view class="mask" wx:if="{{index == imgList.length-1 && imgList.length != count}}"  bindtap="onMoreImage">
+            <i class="cuIcon-more"></i>
+        </view>
+    </view>
+</view>
+
+<view class="titleLabel">
+    <text class="titleClass">标签</text>
+</view>
+<view class="titleLabel">
+    <van-tag size="medium" type="{{m.randomTag()}}" mark wx:for="{{m.transArr(msgData.biaoqian || '')}}" wx:key="index"
+        style="margin: 0 10rpx 10rpx 0">
+        {{item}}</van-tag>
+</view>
+
+<view class="btn-icon" bindtap="onMatchNext"></view>
+<view class="close-icon" bindtap="onNext"></view>
 <view class="cu-bar tabbar bg-white bar">
     <view class="action text-gray" bind:tap="onHome">
         <view class="cuIcon-myfill"></view>
@@ -13,3 +76,36 @@
         消息
     </view>
 </view>
+<van-toast id="van-toast" />
+
+<wxs module="m">
+    var getYear = function (time) {
+        var curtime = getDate();
+        var diff = curtime - time;
+        return Math.floor(diff / (3600 * 1000 * 24 * 365));
+    };
+    var transForm = function (str) {
+        var obj = {
+            hangye: "行业",
+            nicheng: '昵称',
+            xingbie: '性别',
+            riqi: '出生日期',
+            shengao: '身高',
+            chengshi: '居住城市',
+            biaoqian: '标签',
+            jieshao: '自我介绍',
+        }
+        return obj[str]
+    };
+    var transArr = function (str) {
+        return str.split(',')
+    };
+    var randomTag = function () {
+        var arr = ["primary", "success", "danger", "warning"]
+        return arr[Math.floor(Math.random() * 4)]
+    };
+    module.exports.getYear = getYear;
+    module.exports.transForm = transForm;
+    module.exports.randomTag = randomTag;
+    module.exports.transArr = transArr;
+</wxs>

@@ -1,5 +1,48 @@
-<!-- miniprogram/pages/message/index.wxml -->
-<text>miniprogram/pages/message/index.wxml</text>
+<cu-custom bgColor="bg-gradual-blue">
+    <view slot="content">消息</view>
+</cu-custom>
+
+<view class="titleLabel" wx:if="{{paddingList.length}}">
+    <text class="titleClass">新的配对</text>
+</view>
+<view class="container">
+    <div class="box" wx:for="{{paddingList}}" wx:key="index">
+        <view class="avatar" data-openid="{{item.openId}}" bindtap="onMatch">
+            <image src="{{item.avatar}}" mode="aspectFill">
+            </image>
+            <view class="tag"></view>
+        </view>
+        <text class="text-gray">{{m.transName(item.nicheng)}}</text>
+    </div>
+</view>
+<view class="titleLabel">
+    <text class="titleClass">聊天</text>
+    <van-icon name="contact" class="{{state ? 'level' : 'online'}}" bindtap="onState" />
+</view>
+<view wx:if="{{!friendList.length}}">
+    <van-empty description="暂无聊天好友，快去添加吧" />
+</view>
+<view class="cu-list menu-avatar">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{friendList}}" wx:key="index"
+        bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd"
+        data-target="move-box-{{index}}">
+        <image src="{{item.avatar}}" class="cu-avatar round lg" mode="aspectFill" bindtap="onRoom" data-msg="{{item}}">
+        </image>
+        <view class="content" bindtap="onRoom" data-msg="{{item}}">
+            <view class="text-grey">{{item.nicheng}}</view>
+            <view class="text-gray text-sm">{{item.content}}</view>
+        </view>
+        <view class="action" bindtap="onRoom" data-msg="{{item}}">
+            <view class="text-grey text-xs">{{m.timeFn(item.time)}}</view>
+            <view class="cuIcon-notice_forbid_fill text-gray"></view>
+        </view>
+        <view class="move">
+            <view class="bg-grey">置顶</view>
+            <view class="bg-red" bindtap="onDeleteFriend" data-item="{{item}}">删除</view>
+        </view>
+    </view>
+</view>
+
 <view class="cu-bar tabbar bg-white bar">
     <view class="action text-gray" bind:tap="onHome">
         <view class="cuIcon-myfill"></view>
@@ -13,3 +56,25 @@
         消息
     </view>
 </view>
+<van-dialog id="van-dialog" />
+
+<van-action-sheet show="{{ actionShow }}" actions="{{ [{name:'在线'},{name:'隐身'}] }}" bind:close="onActionClose"
+    bind:select="onActionSelect" description="我的在线状态" />
+
+<wxs module="m">
+    var transName = function (name) {
+        if (name.length >= 4) return name.slice(0, 3) + '..'
+        else return name
+    };
+    var timeFn = function (value) {
+        var time = getDate(value);
+        var year = time.getFullYear();
+        var month = time.getMonth() + 1;
+        var date = time.getDate();
+        var hour = time.getHours();
+        var minute = time.getMinutes();
+        var second = time.getSeconds();
+        month = month < 10 ? "0" + month : month; date = date < 10 ? "0" + date : date; hour = hour < 10 ? "0" + hour : hour;
+        minute = minute < 10 ? "0" + minute : minute; second = second < 10 ? "0" + second : second; return hour + ":" +
+            minute;
+    }; module.exports.transName = transName; module.exports.timeFn = timeFn; </wxs>

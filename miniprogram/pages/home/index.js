@@ -5,16 +5,66 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    ablumCount: 0,
+    editCount: 0,
+    avatar: ""
   },
-
+  onGotUserInfo: function (e) {
+    console.log(e.detail);
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    if (!wx.getStorageSync('ready')) {
+      wx.redirectTo({
+        url: '/pages/welcome/index',
+      })
+      return
+    }
+    wx.cloud.callFunction({
+      name: "chatuser",
+      data: {
+        action: 'init',
+      }
+    })
+    wx.cloud.callFunction({
+      name: "ablum",
+      data: {
+        action: 'count',
+      }
+    }).then(res => {
+      this.setData({
+        ablumCount: res.result
+      })
+    })
+    wx.cloud.callFunction({
+      name: "edit",
+      data: {
+        action: 'count',
+      }
+    }).then(res => {
+      this.setData({
+        editCount: res.result.count,
+        avatar: res.result.avatar,
+      })
+      wx.setStorageSync('roomUser', {
+        avatar: res.result.avatar,
+        nicheng: res.result.nicheng,
+        openId: res.result.openId
+      })
+    })
   },
-
+  onEdit: function () {
+    wx.navigateTo({
+      url: '/pages/edit/index',
+    })
+  },
+  onAblum: function () {
+    wx.navigateTo({
+      url: '/pages/ablum/index',
+    })
+  },
   onFind: function () {
     wx.redirectTo({
       url: '/pages/find/index'

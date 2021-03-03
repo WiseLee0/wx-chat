@@ -1,0 +1,64 @@
+<view class="chatroom">
+  <view class="header">
+    <!-- display number of people in the room -->
+    <view class="left" bindtap="onBack">
+      <i class="cuIcon-back"></i>
+    </view>
+    <!-- room name -->
+    <view class="middle" bindtap="onOperate">
+      <text>{{groupName}}</text>
+      <i class="cuIcon-unfold"></i>
+    </view>
+    <!-- reserved -->
+    <view class="right"></view>
+  </view>
+  <!-- chats -->
+  <scroll-view class="body" scroll-y scroll-with-animation="{{scrollWithAnimation}}" scroll-top="{{scrollTop}}"
+    scroll-into-view="{{scrollToMessage}}" bindscrolltoupper="onScrollToUpper">
+    <view wx:for="{{chats}}" wx:key="{{item._id}}" id="item-{{index}}"
+      class="message {{openId == item._openid ? 'message__self' : ''}}">
+      <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+      <view class="main">
+        <view class="nickname">{{item.nickName}}</view>
+        <block wx:if="{{item.msgType === 'image'}}">
+          <view class="image-wrapper">
+            <view class="loading" wx:if="{{item.writeStatus > -1}}">{{item.writeStatus}}%</view>
+            <image src="{{item.tempFilePath || item.imgFileID}}" data-fileid="{{item.tempFilePath || item.imgFileID}}"
+              class="image-content" style="{{item.imgStyle}}" mode="aspectFill" bindtap="onMessageImageTap"></image>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="text-wrapper">
+            <view class="loading" wx:if="{{item.writeStatus === 'pending'}}">···</view>
+            <view class="text-content {{openId == item._openid ? 'content__self' : 'content__other'}}">
+              {{item.textContent}}</view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- message sender -->
+  <view class="footer">
+    <view class="message-sender" wx:if="{{userInfo}}">
+      <input class="text-input" type="text" confirm-type="send" bindconfirm="onConfirmSendText" cursor-spacing="20"
+        value="{{textInputValue}}"></input>
+      <image src="./photo.png" class="btn-send-image" mode="aspectFill" bindtap="onChooseImage"></image>
+    </view>
+
+    <view class="message-sender" wx:if="{{!userInfo}}">
+      <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo">请先登录后参与聊天</button>
+    </view>
+  </view>
+
+</view>
+
+<van-action-sheet show="{{ actionShow }}" actions="{{[{name:'查看她的资料'},{name:'解除匹配'},{name:'举报'}]}}"
+  bind:close="onActionClose" bind:select="onActionSelect" />
+
+<van-action-sheet show="{{ actionShow2 }}"
+  actions="{{[{name:'聊天内容感到不适'},{name:'骚扰广告'},{name:'诈骗钱财'},{name:'其他'},{name:'取消'}]}}" bind:close="onActionClose2"
+  bind:select="onActionSelect2" />
+
+<van-dialog id="van-dialog" title="解除匹配" message="解除后将无法继续聊天,确定解除和{{groupName}}的匹配吗?" show-confirm-button
+  show-cancel-button show="{{ dialogShow }}" bind:confirm="onMatch" />

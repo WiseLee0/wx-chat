@@ -1,0 +1,135 @@
+<cu-custom bgColor="bg-gradual-blue" isBack>
+  <view slot="content">编辑资料</view>
+</cu-custom>
+
+<van-cell title="头像" is-link title-class="titleClass" custom-class="customClass" border="{{false}}" bindtap="onAvatar">
+  <view class="c-value">
+    <image src="{{avatar}}" mode="aspectFill" class="avatar"></image>
+  </view>
+</van-cell>
+<view class="titleLabel">
+  <text class="titleClass">相册</text>
+  <text class="gray-note">共 {{count}} 张</text>
+</view>
+<view class="titleLabel box" bindtap="onAblum">
+  <view class="icon">
+    <i class="cuIcon-camerafill "></i>
+  </view>
+  <view wx:for="{{imgList}}" wx:key="index" class="imgBox">
+    <image mode="aspectFill" src="{{item}}" class="img"></image>
+    <view class="mask" wx:if="{{index == 3}}">
+      <i class="cuIcon-more"></i>
+    </view>
+  </view>
+</view>
+<view class="titleLabel" style="margin-bottom:0">
+  <text class="titleClass">基础信息</text>
+</view>
+<van-cell title="行业" value="{{hangye}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="hangye">
+  <view slot="icon">
+    <i class="cuIcon-shopfill label-icon"></i>
+  </view>
+</van-cell>
+<van-cell title="昵称 " value="{{nicheng}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="nicheng">
+  <view slot="icon">
+    <i class="cuIcon-peoplefill label-icon"></i>
+  </view>
+</van-cell>
+<van-cell title="性别 " value="{{xingbie}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="xingbie">
+  <view slot="icon">
+    <i class="cuIcon-profilefill label-icon"></i>
+  </view>
+</van-cell>
+<van-cell title="出生日期" value="{{m.times(riqi)}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="riqi">
+  <view slot="icon">
+    <i class="cuIcon-timefill label-icon"></i>
+  </view>
+</van-cell>
+<van-cell title="身高" value="{{shengao}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="shengao">
+  <view slot="icon">
+    <i class="cuIcon-newshotfill label-icon"></i>
+  </view>
+</van-cell>
+<van-cell title="居住城市" value="{{chengshi}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="chengshi">
+  <view slot="icon">
+    <i class="cuIcon-homefill label-icon"></i>
+  </view>
+</van-cell>
+<van-cell title="标签" is-link border="{{false}}" use-label-slot bindtap="onPopupShow" data-name="biaoqian">
+  <view slot="icon">
+    <i class="cuIcon-tagfill label-icon"></i>
+  </view>
+  <view slot="label">
+    <van-tag type="{{m.randomTag()}}" wx:for="{{m.transArr(biaoqian)}}" wx:key="index" style="margin: 0 10rpx 10rpx 0">
+      {{item}}</van-tag>
+  </view>
+</van-cell>
+<van-cell title="自我介绍" label="{{jieshao}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="jieshao">
+  <view slot="icon">
+    <i class="cuIcon-markfill label-icon"></i>
+  </view>
+</van-cell>
+<view class="titleLabel" style="margin-bottom:0">
+  <text class="titleClass">其他</text>
+</view>
+<van-cell title="设置隐身状态" border="{{false}}">
+  <van-switch checked="{{ state }}" size="48rpx" bind:change="onSwitchChange" />
+</van-cell>
+<view class="titleLabel state-note">
+  <text>
+    隐身后，自己资料页不会展示最近活跃时间，在他人聊天列表中也不会显示当前在线的绿点标识
+  </text>
+</view>
+<van-popup show="{{ showPopup }}" bind:close="onPopupClose" custom-style="height: 30%;" position="bottom" closeable
+  round custom-class="popup">
+  <van-field model:value="{{ hangye }}" placeholder="请输入{{m.transForm(currentName)}}" border="{{ false }}"
+    label="{{m.transForm(currentName)}}" wx:if="{{currentName == 'hangye'}}" />
+  <van-field model:value="{{ nicheng }}" placeholder="请输入{{m.transForm(currentName)}}" border="{{ false }}"
+    label="{{m.transForm(currentName)}}" wx:if="{{currentName == 'nicheng'}}" />
+  <van-picker columns="{{ ['男','女'] }}" bind:change="onPickerChange" wx:if="{{currentName == 'xingbie'}}" />
+  <van-datetime-picker type="date" value="{{ riqi }}" bind:input="onTimeChange" min-date="{{ minDate }}"
+    formatter="{{ formatter }}" wx:if="{{currentName == 'riqi'}}" />
+  <van-field model:value="{{ shengao }}" placeholder="请输入{{m.transForm(currentName)}}" border="{{ false }}"
+    label="{{m.transForm(currentName)}}" wx:if="{{currentName == 'shengao'}}" />
+  <van-field model:value="{{ chengshi }}" placeholder="请输入{{m.transForm(currentName)}}" border="{{ false }}"
+    label="{{m.transForm(currentName)}}" wx:if="{{currentName == 'chengshi'}}" />
+  <van-field value="{{ biaoqian }}" placeholder="请输入{{m.transForm(currentName)}}" border="{{ false }}"
+    bind:confirm="onTagChange" label="{{m.transForm(currentName)}}" wx:if="{{currentName == 'biaoqian'}}" />
+  <van-field model:value="{{ jieshao }}" type="textarea" autosize placeholder="请输入{{m.transForm(currentName)}}"
+    border="{{ false }}" label="{{m.transForm(currentName)}}" wx:if="{{currentName == 'jieshao'}}" />
+</van-popup>
+
+<wxs module="m">
+  var transForm = function (str) {
+    var obj = {
+      hangye: "行业",
+      nicheng: '昵称',
+      xingbie: '性别',
+      riqi: '出生日期',
+      shengao: '身高',
+      chengshi: '居住城市',
+      biaoqian: '标签',
+      jieshao: '自我介绍',
+    }
+    return obj[str]
+  };
+  var transArr = function (str) {
+    return str.split(',')
+  };
+  var randomTag = function () {
+    var arr = ["primary", "success", "danger", "warning"]
+    return arr[Math.floor(Math.random() * 4)]
+  };
+  var times = function (value) {
+    var time = getDate(value);
+    var year = time.getFullYear();
+    var month = time.getMonth() + 1;
+    var date = time.getDate();
+    var hour = time.getHours();
+    var minute = time.getMinutes();
+    var second = time.getSeconds();
+    month = month < 10 ? "0" + month : month; date = date < 10 ? "0" + date : date; hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute; second = second < 10 ? "0" + second : second; return year + "-" + month
+      + "-" + date;
+  }; module.exports.randomTag = randomTag; module.exports.times = times; module.exports.transArr = transArr;
+  module.exports.transForm = transForm; </wxs>

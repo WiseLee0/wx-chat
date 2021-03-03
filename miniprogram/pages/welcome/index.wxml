@@ -1,0 +1,8 @@
+<cu-custom bgColor="bg-gradual-blue">
+  <view slot="content">用户授权</view>
+</cu-custom>
+<view class="container">
+  <image src="cloud://hello-3ff0d2.6865-hello-3ff0d2-1258595957/backgroud/442117.jpg" class="img" mode="aspectFill"></image>
+  <button class="btn" open-type='getUserInfo' lang="zh_CN" bindgetuserinfo="getuserinfo">授权</button>
+  <view class="mask"></view>
+</view>

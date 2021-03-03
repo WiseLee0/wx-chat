@@ -15,7 +15,7 @@
   width: 200rpx;
   height: 200rpx;
   border-radius: 50%;
-  margin: 200rpx 0 50rpx 0;
+  margin: 100rpx 0 50rpx 0;
   overflow: hidden;
 }
 

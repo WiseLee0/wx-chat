@@ -46,16 +46,13 @@
   "projectname": "miniprogram-1",
   "libVersion": "2.14.1",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
     "game": {
+      "list": []
+    },
+    "gamePlugin": {
       "list": []
     },
     "miniprogram": {
@@ -63,7 +60,44 @@
         {
           "id": -1,
           "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide"
+          "pathName": "pages/databaseGuide/databaseGuide",
+          "query": ""
+        },
+        {
+          "name": "pages/ablum/index",
+          "pathName": "pages/ablum/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/edit/index",
+          "pathName": "pages/edit/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/find/index",
+          "pathName": "pages/find/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/message/index",
+          "pathName": "pages/message/index",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/room/room",
+          "pathName": "pages/room/room",
+          "query": "nicheng=wiselee&roomId=oeibN4lXX41df0Y8PpqvCqdUi4Sk-oeibN4rWqEQS160gpAmAN5cr2MqQ",
+          "scene": null
+        },
+        {
+          "name": "pages/detail/index",
+          "pathName": "pages/detail/index",
+          "query": "nicheng=wiselee&roomId=oeibN4lXX41df0Y8PpqvCqdUi4Sk-oeibN4rWqEQS160gpAmAN5cr2MqQ",
+          "scene": null
         }
       ]
     }

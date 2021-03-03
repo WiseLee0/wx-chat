@@ -14,7 +14,7 @@ Component({
     bgColor: {
       type: String,
       default: ''
-    }, 
+    },
     isCustom: {
       type: [Boolean, String],
       default: false
@@ -27,6 +27,10 @@ Component({
       type: String,
       default: ''
     },
+    noRefresh: {
+      type: Boolean,
+      default: false
+    }
   },
   /**
    * 组件的初始数据
@@ -41,11 +45,21 @@ Component({
    */
   methods: {
     BackPage() {
+      if (this.data.noRefresh) {
+        wx.navigateBack({
+          delta: 0,
+        })
+        return
+      }
+      const pages = getCurrentPages();
+      const beforePage = pages[pages.length - 2];
       wx.navigateBack({
-        delta: 1
+        success: function () {
+          beforePage.onLoad();
+        }
       });
     },
-    toHome(){
+    toHome() {
       wx.reLaunch({
         url: '/pages/index/index',
       })

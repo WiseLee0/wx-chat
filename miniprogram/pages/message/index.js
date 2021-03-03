@@ -1,11 +1,56 @@
-// miniprogram/pages/message/index.js
+import Dialog from "../../miniprogram_npm/@vant/weapp/dialog/dialog";
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+    paddingList: [],
+    friendList: [],
+    actionShow: false,
+    state: false
+  },
+  onActionClose: function () {
+    this.setData({
+      actionShow: false
+    })
+  },
+  onActionSelect: function (e) {
+    console.log(e.detail.name)
 
+    wx.cloud.callFunction({
+      name: "edit",
+      data: {
+        action: 'update',
+        name: 'state',
+        data: !this.data.state
+      }
+    }).then(() => {
+      this.setData({
+        state: !this.data.state
+      })
+    })
+  },
+  onMatch: function (e) {
+    const openId = e.currentTarget.dataset.openid
+    Dialog.confirm({
+        title: '匹配提示',
+        message: '是否同意对方请求',
+      })
+      .then(() => {
+        wx.showLoading({
+          title: '加载中..',
+        })
+        wx.cloud.callFunction({
+          name: "like",
+          data: {
+            action: 'list',
+            openId
+          }
+        }).then(() => {
+          this.requestData()
+        })
+      })
   },
   onFind: function () {
     wx.redirectTo({
@@ -17,59 +62,110 @@ Page({
       url: '/pages/home/index'
     })
   },
+  onRoom: function (e) {
+    const {
+      openId: userId,
+      nicheng
+    } = e.currentTarget.dataset.msg
+    const myId = wx.getStorageSync('roomUser').openId;
+    const roomId = [userId, myId].sort().join('-')
+    wx.navigateTo({
+      url: `/pages/room/room?roomId=${roomId}&nicheng=${nicheng}`,
+    })
+  },
+  onState: function () {
+    this.setData({
+      actionShow: true
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.requestData()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onDeleteFriend: function (e) {
+    const openId = e.currentTarget.dataset.item.openId
+    Dialog.confirm({
+        title: '解除匹配',
+        message: '是否要解除关系，解除后不能发送消息',
+      })
+      .then(() => {
+        wx.showLoading({
+          title: '加载中..',
+        })
+        wx.cloud.callFunction({
+          name: "like",
+          data: {
+            action: 'delete',
+            openId
+          }
+        }).then(() => {
+          this.requestData()
+        })
+      }).catch(() => {})
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
+  requestData: function () {
+    wx.showLoading({
+      title: '加载中..',
+    })
+    wx.cloud.callFunction({
+      name: "like",
+      data: {
+        action: 'get'
+      }
+    }).then((res) => {
+      const {
+        padding,
+        list
+      } = res.result
+      this.setData({
+        paddingList: padding,
+        friendList: list
+      })
+      wx.hideLoading()
+    })
 
+    wx.cloud.callFunction({
+      name: "edit",
+      data: {
+        action: 'state'
+      }
+    }).then(res => {
+      this.setData({
+        state: res.result
+      })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  // ListTouch触摸开始
+  ListTouchStart(e) {
+    this.setData({
+      ListTouchStart: e.touches[0].pageX
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  // ListTouch计算方向
+  ListTouchMove(e) {
+    this.setData({
+      ListTouchDirection: e.touches[0].pageX - this.data.ListTouchStart > 0 ? 'right' : 'left'
+    })
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  // ListTouch计算滚动
+  ListTouchEnd(e) {
+    if (this.data.ListTouchDirection == 'left') {
+      this.setData({
+        modalName: e.currentTarget.dataset.target
+      })
+    } else {
+      this.setData({
+        modalName: null
+      })
+    }
+    this.setData({
+      ListTouchDirection: null
+    })
   }
 })

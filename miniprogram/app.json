@@ -1,8 +1,13 @@
 {
   "pages": [
     "pages/home/index",
+    "pages/welcome/index",
     "pages/find/index",
-    "pages/message/index"
+    "pages/message/index",
+    "pages/ablum/index",
+    "pages/edit/index",
+    "pages/room/room",
+    "pages/detail/index"
   ],
   "window": {
     "navigationStyle": "custom"

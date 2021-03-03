@@ -1,0 +1,36 @@
+<cu-custom bgColor="bg-gradual-blue" isBack>
+  <view slot="content">我的相册</view>
+</cu-custom>
+<view class="container">
+  <view class="left">
+    <van-uploader file-list="{{ fileList }}" bind:after-read="afterRead">
+      <view class="addIcon">
+        <view class="cuIcon-camerafill"></view>
+        <text>添加图片</text>
+      </view>
+    </van-uploader>
+    <block wx:for="{{m.left(imgList)}}" wx:key="index">
+      <image src="{{item}}" bindlongpress="onLongPress" class="img" mode="widthFix" bindtap='previewImage'
+        data-src="{{item}}" />
+    </block>
+  </view>
+  <view class="right">
+    <block wx:for="{{m.right(imgList)}}" wx:key="index">
+      <image src="{{item}}" class="img" bindlongpress="onLongPress" mode="widthFix" bindtap='previewImage'
+        data-src="{{item}}" />
+    </block>
+  </view>
+</view>
+
+<van-action-sheet show="{{ show }}" actions="{{ actions }}" bind:select="onSelect" bind:close="onClose" />
+
+<wxs module="m">
+  var left = function (data) {
+    return data.slice(0, Math.floor(data.length / 2))
+  }
+  var right = function (data) {
+    return data.slice(Math.floor(data.length / 2))
+  }
+  module.exports.left = left
+  module.exports.right = right
+</wxs>
