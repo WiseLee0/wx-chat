@@ -16,8 +16,6 @@ Page({
     })
   },
   onActionSelect: function (e) {
-    console.log(e.detail.name)
-
     wx.cloud.callFunction({
       name: "edit",
       data: {
@@ -68,7 +66,7 @@ Page({
       nicheng
     } = e.currentTarget.dataset.msg
     const myId = wx.getStorageSync('roomUser').openId;
-    const roomId = [userId, myId].sort().join('-')
+    const roomId = [userId, myId].sort().join(',')
     wx.navigateTo({
       url: `/pages/room/room?roomId=${roomId}&nicheng=${nicheng}`,
     })

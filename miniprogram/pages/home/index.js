@@ -16,12 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (!wx.getStorageSync('ready')) {
-      wx.redirectTo({
-        url: '/pages/welcome/index',
-      })
-      return
-    }
+   
     wx.cloud.callFunction({
       name: "chatuser",
       data: {

@@ -98,6 +98,11 @@
           "pathName": "pages/detail/index",
           "query": "nicheng=wiselee&roomId=oeibN4lXX41df0Y8PpqvCqdUi4Sk-oeibN4rWqEQS160gpAmAN5cr2MqQ",
           "scene": null
+        },
+        {
+          "name": "pages/home/index",
+          "pathName": "pages/home/index",
+          "scene": null
         }
       ]
     }

@@ -9,6 +9,9 @@ Page({
   },
   getuserinfo(e) {
     const userInfo = e.detail.userInfo
+    wx.showLoading({
+      title: '加载中..',
+    })
     wx.cloud.callFunction({
       name: "edit",
       data: {
@@ -18,10 +21,10 @@ Page({
         nickName: userInfo.nickName
       }
     }).then(() => {
+      wx.hideLoading()
       wx.redirectTo({
         url: '/pages/home/index',
       })
-      wx.setStorageSync('ready', true)
     })
   },
   /**

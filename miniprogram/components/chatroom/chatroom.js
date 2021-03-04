@@ -34,7 +34,7 @@ Component({
   methods: {
     onMatch() {
       const me = wx.getStorageSync('roomUser').openId
-      const openId = this.data.groupId.split("-").filter(a => a != me)[0]
+      const openId = this.data.groupId.split(",").filter(a => a != me)[0]
       wx.showLoading({
         title: '解除中',
       })
