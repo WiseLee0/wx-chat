@@ -82,6 +82,30 @@ Page({
       })
     })
   },
+  getLocation: function () {
+    wx.chooseLocation({
+      success: (res) => {
+        console.log(res)
+        const address = res.address + res.name
+        this.setData({
+          chengshi: address
+        })
+        wx.showLoading({
+          title: '更新中',
+        })
+        wx.cloud.callFunction({
+          name: "edit",
+          data: {
+            action: 'update',
+            name: "chengshi",
+            data: address
+          }
+        }).then(res => {
+          wx.hideLoading()
+        })
+      }
+    })
+  },
   onTagChange: function (event) {
     let str = event.detail
     str = str.replace(/\,+/g, ',')

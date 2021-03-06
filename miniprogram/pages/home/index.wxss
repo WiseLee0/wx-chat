@@ -4,6 +4,7 @@
   align-items: center;
   position: relative;
 }
+
 .title {
   font-size: 48rpx;
   font-weight: bolder;
@@ -11,6 +12,7 @@
   left: 40rpx;
   top: 80rpx;
 }
+
 .avatar {
   width: 200rpx;
   height: 200rpx;
@@ -34,7 +36,7 @@
   width: 49%;
 }
 
-.fun > view {
+.fun>view {
   margin-left: 20rpx;
   display: flex;
   flex-direction: column;
@@ -54,13 +56,39 @@
   color: #aaa;
   font-size: 24rpx;
 }
+
 .font-blod {
   color: #333;
   font-weight: bold;
 }
-.bar{
+
+.bar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.set-cell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30rpx;
+  margin-top: 40rpx;
+}
+
+.set-left {
+  display: flex;
+  flex-direction: column;
+  padding-right: 40rpx;
+}
+
+.set-left text:nth-child(1) {
+  margin-bottom: 15rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+.set-left text:nth-child(2) {
+  font-size: 26rpx;
+  color: #aaa;
 }

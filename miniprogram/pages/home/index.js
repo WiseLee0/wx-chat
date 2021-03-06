@@ -7,16 +7,66 @@ Page({
   data: {
     ablumCount: 0,
     editCount: 0,
-    avatar: ""
+    avatar: "",
+    locationCheck: false,
+    timeCheck: false
   },
   onGotUserInfo: function (e) {
     console.log(e.detail);
+  },
+  onTimeChange: function () {
+    wx.showLoading({
+      title: '加载中..',
+    })
+    wx.cloud.callFunction({
+      name: "setting",
+      data: {
+        action: 'update',
+        name: 'time',
+        data: !this.data.timeCheck
+      }
+    }).then(() => {
+      this.setData({
+        timeCheck: !this.data.timeCheck
+      })
+      wx.hideLoading()
+    })
+  },
+  onLocationChange: function () {
+    wx.showLoading({
+      title: '加载中..',
+    })
+    wx.cloud.callFunction({
+      name: "setting",
+      data: {
+        action: 'update',
+        name: 'location',
+        data: !this.data.locationCheck
+      }
+    }).then(() => {
+      this.setData({
+        locationCheck: !this.data.locationCheck
+      })
+      wx.hideLoading()
+    })
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
+
+    wx.cloud.callFunction({
+      name: "setting",
+      data: {
+        action: 'get',
+      }
+    }).then(res => {
+      this.setData({
+        locationCheck: res.result.location,
+        timeCheck: res.result.time,
+      })
+    })
+
     wx.cloud.callFunction({
       name: "chatuser",
       data: {

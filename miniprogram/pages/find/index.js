@@ -11,7 +11,9 @@ Page({
     msgData: [],
     imgList: [],
     userList: [],
-    userIndex: 0
+    userIndex: 0,
+    locationCheck: false,
+    timeCheck: false
   },
   onMoreImage: function () {
     const {
@@ -25,7 +27,6 @@ Page({
         start: this.data.imgList.length
       }
     }).then(res => {
-      console.log(res)
       this.setData({
         imgList: [...this.data.imgList, ...res.result.img]
       })
@@ -75,6 +76,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: async function (options) {
+    wx.showLoading({
+      title: '搜索匹配中..',
+    })
     const {
       result
     } = await wx.cloud.callFunction({
@@ -83,6 +87,7 @@ Page({
         action: 'all'
       }
     })
+    wx.hideLoading()
     this.setData({
       userList: result
     })
@@ -95,6 +100,18 @@ Page({
       title: '加载中..',
     })
     const openId = this.data.userList[index].openId
+    wx.cloud.callFunction({
+      name: "setting",
+      data: {
+        action: 'get',
+        openId
+      }
+    }).then(res => {
+      this.setData({
+        locationCheck: res.result.location,
+        timeCheck: res.result.time,
+      })
+    })
     wx.cloud.callFunction({
       name: "ablum",
       data: {

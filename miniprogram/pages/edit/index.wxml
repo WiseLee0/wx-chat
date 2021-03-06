@@ -50,7 +50,7 @@
     <i class="cuIcon-newshotfill label-icon"></i>
   </view>
 </van-cell>
-<van-cell title="居住城市" value="{{chengshi}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="chengshi">
+<van-cell title="居住城市" value="{{chengshi}}" is-link border="{{false}}" bindtap="getLocation" data-name="chengshi">
   <view slot="icon">
     <i class="cuIcon-homefill label-icon"></i>
   </view>

@@ -21,10 +21,32 @@ async function getChatUser(event, wxContext) {
 }
 
 async function allChatUser(event, wxContext) {
-  const res = await db.collection('chatuser').where({
+  const user = await db.collection('chatuser').where({
     openId: _.not(_.eq(wxContext.OPENID))
   }).get()
-  return res.data
+  const arr = []
+  for (let i = 0; i < user.data.length; i++) {
+    arr.push(user.data[i].openId)
+  }
+  let edit = await db.collection('edit').get()
+  const my = edit.data.find(d => d.openId == wxContext.OPENID)
+  let calc = []
+  edit.data.forEach(e => {
+    const diff = Math.abs(e.msg.riqi - my.msg.riqi)
+    calc.push({
+      diff,
+      data: e
+    })
+  })
+  calc = calc.sort((a, b) => {
+    return a.diff - b.diff
+  })
+  const ans = []
+  calc.forEach(e => {
+    let r = user.data.find(u => u.openId == e.data.openId)
+    if (r) ans.push(r)
+  });
+  return ans
 }
 
 async function initChatUser(event, wxContext) {

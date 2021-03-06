@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "van-tag": "@vant/weapp/tag/index"
+    "van-tag": "@vant/weapp/tag/index",
+    "van-switch": "@vant/weapp/switch/index"
   }
 }

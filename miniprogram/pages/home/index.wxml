@@ -41,6 +41,20 @@
         消息
     </view>
 </view>
+<view class="set-cell">
+    <view class="set-left">
+        <text>隐藏我的距离和位置</text>
+        <text>开启后别人将无法看到与你的距离和你的位置信息</text>
+    </view>
+    <van-switch checked="{{ locationCheck }}" bind:change="onLocationChange" />
+</view>
+<view class="set-cell">
+    <view class="set-left">
+        <text>冻结最后活跃时间</text>
+        <text>将你的活跃时间冻结在此刻不再更新</text>
+    </view>
+    <van-switch checked="{{ timeCheck }}" bind:change="onTimeChange" />
+</view>
 <wxs module="m">
     var transformTag = function (num) {
         if (num == 0) return 'success';

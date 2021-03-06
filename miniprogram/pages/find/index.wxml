@@ -9,7 +9,7 @@
         <view class="msg">
             <view class="msg-label">
                 <i class="iconfont {{msgData.xingbie == '男' ? 'icon-male-01' : 'icon-nv'}}"></i>
-                <text class="text-gray text-sm">{{time}}前来过</text>
+                <text class="text-gray text-sm">{{m.timeHidden(timeCheck,time)}}</text>
             </view>
             <view class="msg-label">
                 <view class="inner-label">
@@ -22,7 +22,7 @@
                 </view>
                 <view class="inner-label">
                     <i class="cuIcon-homefill label-icon"></i>
-                    <text class="text-df">{{msgData.chengshi  || '未填写'}}</text>
+                    <text class="text-df">{{locationCheck ? '此信息已隐藏' : msgData.chengshi  || '未填写'}}</text>
                 </view>
             </view>
             <view class="msg-label">
@@ -39,14 +39,14 @@
     </view>
 </view>
 
-<view class="titleLabel">
+<view class="titleLabel" style="margin-top:20rpx">
     <text class="titleClass">相册</text>
     <text class="gray-note">共 {{count}} 张</text>
 </view>
 <view class="titleLabel box" bindtap="onAblum">
     <view wx:for="{{imgList}}" wx:key="index" class="imgBox">
         <image mode="aspectFill" src="{{item}}" class="img" bindtap='previewImage' data-src="{{index}}"></image>
-        <view class="mask" wx:if="{{index == imgList.length-1 && imgList.length != count}}"  bindtap="onMoreImage">
+        <view class="mask" wx:if="{{index == imgList.length-1 && imgList.length != count}}" bindtap="onMoreImage">
             <i class="cuIcon-more"></i>
         </view>
     </view>
@@ -79,6 +79,13 @@
 <van-toast id="van-toast" />
 
 <wxs module="m">
+    var timeHidden = function (flag, time) {
+        if (flag) {
+            return '此消息已隐藏'
+        } else {
+            return time + '之前来过'
+        }
+    };
     var getYear = function (time) {
         var curtime = getDate();
         var diff = curtime - time;
@@ -105,6 +112,7 @@
         return arr[Math.floor(Math.random() * 4)]
     };
     module.exports.getYear = getYear;
+    module.exports.timeHidden = timeHidden;
     module.exports.transForm = transForm;
     module.exports.randomTag = randomTag;
     module.exports.transArr = transArr;
