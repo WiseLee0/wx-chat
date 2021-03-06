@@ -37,7 +37,8 @@
     <i class="cuIcon-profilefill label-icon"></i>
   </view>
 </van-cell>
-<van-cell title="出生日期" value="{{m.times(riqi)}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="riqi">
+<van-cell title="出生日期" value="{{m.times(riqi)}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="riqi"
+  wx:if="{{!timeCheck}}">
   <view slot="icon">
     <i class="cuIcon-timefill label-icon"></i>
   </view>
@@ -47,7 +48,8 @@
     <i class="cuIcon-newshotfill label-icon"></i>
   </view>
 </van-cell>
-<van-cell title="居住城市" value="{{chengshi}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="chengshi">
+<van-cell title="居住城市" value="{{chengshi}}" is-link border="{{false}}" bindtap="onPopupShow" data-name="chengshi"
+  wx:if="{{!locationCheck}}">
   <view slot="icon">
     <i class="cuIcon-homefill label-icon"></i>
   </view>

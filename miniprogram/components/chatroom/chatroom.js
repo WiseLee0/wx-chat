@@ -85,7 +85,7 @@ Component({
     onActionSelect(event) {
       if (event.detail.name == "查看她的资料") {
         const me = wx.getStorageSync('roomUser').openId
-        const openId = this.data.groupId.split("-").filter(a => a != me)[0]
+        const openId = this.data.groupId.split(",").filter(a => a != me)[0]
         wx.navigateTo({
           url: `/pages/detail/index?openId=${openId}`,
         })
